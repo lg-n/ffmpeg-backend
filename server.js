@@ -34,7 +34,7 @@ app.post('/combine', async (req, res) => {
         });
 
         // Run FFmpeg
-        exec(`ffmpeg -loop 1 -i ${imagePath} -i ${audioPath} -c:v libx264 -tune stillimage -c:a aac -pix_fmt yuv420p -shortest ${outputPath}`, async (err) => {
+        exec(`ffmpeg -y -loop 1 -i ${imagePath} -i ${audioPath} -c:v libx264 -tune stillimage -preset fast -crf 23 -pix_fmt yuv420p -c:a aac -b:a 192k -shortest -movflags +faststart ${outputPath}`, async (err) => {
             if (err) return res.status(500).send("FFmpeg error");
 
             // Upload output
@@ -56,6 +56,6 @@ app.post('/combine', async (req, res) => {
 });
 
 const PORT = process.env.PORT || 3000;
-app.listen(PORT, () => {
+app.listen(PORT, '0.0.0.0', () => {
     console.log(`Server running on port ${PORT}`);
 });
