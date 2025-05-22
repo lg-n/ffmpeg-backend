@@ -38,7 +38,7 @@ app.post('/combine', async (req, res) => {
             if (err) return res.status(500).send("FFmpeg error");
 
             // Upload output
-            const uploadRes = await axios.post('https://file.io ', fs.createReadStream(outputPath), {
+            const uploadRes = await axios.post('https://file.io', fs.createReadStream(outputPath), {
                 headers: { 'Content-Type': 'video/mp4' }
             });
 
